@@ -1,11 +1,13 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import QuizList from "@/components/QuizList.astro";
+import Layout from "@/layouts/Layout.astro";
+import {fetchQuizzes} from "@/libs/fetchQuizzes"
+import { QuizResponse } from "@/types/quiz";
+const quizData:QuizResponse = await fetchQuizzes();
 ---
 
+<h1>アクセシビリティクイズ</h1>
+
 <Layout>
-	<Welcome />
+	<QuizList quizzes={quizData.contents} />
 </Layout>
