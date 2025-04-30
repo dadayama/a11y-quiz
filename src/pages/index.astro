@@ -1,4 +1,7 @@
 ---
+import AnimatedBox from "@/components/AnimatedBox.astro";
+import AnimationToggleButton from "@/components/AnimationToggleButton.tsx";
+
 import QuizList from "@/components/QuizList.astro";
 import Layout from "@/layouts/Layout.astro";
 import {fetchQuizzes} from "@/libs/fetchQuizzes"
@@ -9,5 +12,7 @@ const quizData:QuizResponse = await fetchQuizzes();
 <h1>アクセシビリティクイズ</h1>
 
 <Layout>
+	<AnimationToggleButton client:load/>
+	 <AnimatedBox />
 	<QuizList quizzes={quizData.contents} />
 </Layout>

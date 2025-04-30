@@ -1,0 +1,58 @@
+<div class="scroll-container">
+  <div class="scroll-wrapper">
+    <!-- 最初のアイテムセット -->
+    <div class="scroll-item">アイテム1</div>
+    <div class="scroll-item">アイテム2</div>
+    <div class="scroll-item">アイテム3</div>
+    <div class="scroll-item">アイテム4</div>
+    <div class="scroll-item">アイテム5</div>
+    <div class="scroll-item">アイテム6</div>
+    <div class="scroll-item">アイテム7</div>
+    <div class="scroll-item">アイテム8</div>
+    <!-- アイテム1からアイテム8の繰り返し -->
+    <div class="scroll-item">アイテム1</div>
+    <div class="scroll-item">アイテム2</div>
+    <div class="scroll-item">アイテム3</div>
+    <div class="scroll-item">アイテム4</div>
+    <div class="scroll-item">アイテム5</div>
+    <div class="scroll-item">アイテム6</div>
+    <div class="scroll-item">アイテム7</div>
+    <div class="scroll-item">アイテム8</div>
+  </div>
+</div>
+
+<style>
+  .scroll-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .scroll-wrapper {
+    display: flex;
+    width: 200%; /* 2セット分の幅 */
+    animation: scroll 3s linear infinite; /* スムーズにアニメーション */
+  }
+
+  .scroll-item {
+    width: 25%;  /* 1画面に4つ表示されるように設定 */
+    height: 200px;
+    background-color: #ff7f50;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 40px;
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0); /* 最初の位置 */
+    }
+    100% {
+      transform: translateX(-50%); /* 最後のアイテムの後に次のセットが来るように */
+    }
+  }
+</style>
