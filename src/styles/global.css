@@ -1,6 +1,0 @@
-.stop-animation *,
-.stop-animation *::before,
-.stop-animation *::after {
-  animation-play-state: paused !important; /* アニメーションを一時停止 */
-  transition: none !important; /* トランジションは無効化 */
-}

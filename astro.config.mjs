@@ -1,13 +1,7 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
+import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  integrations: [react()],
-  vite: {
-    resolve: {
-      alias: {
-        '@': '/src', // @を/srcにマップ
-      },
-    },
-  },
+  integrations: [react(), tailwind()],
 });
