@@ -1,11 +1,31 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import QuizContainer from '../components/QuizContainer';
+import { accessibilityQuizQuestions } from '../data/quizQuestions';
+import { Activity } from 'lucide-react';
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="アクセシビリティクイズ">
+  <div class="min-h-screen bg-gradient-to-br from-purple-50 to-teal-50 px-4 py-10">
+    <header class="max-w-2xl mx-auto mb-8 text-center">
+      <div class="flex items-center justify-center mb-3">
+        <Activity size={32} className="text-purple-600 mr-2" />
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-800">
+          アクセシビリティクイズ
+        </h1>
+      </div>
+      <p class="text-gray-600 max-w-lg mx-auto">
+        Webアクセシビリティの基準とベストプラクティスに関する知識をテストしましょう。
+        すべてのユーザーにとって使いやすいデジタル体験を作るための理解を深めましょう。
+      </p>
+    </header>
+    
+    <main>
+      <QuizContainer questions={accessibilityQuizQuestions} client:load />
+    </main>
+    
+    <footer class="max-w-2xl mx-auto mt-12 text-center text-gray-500 text-sm">
+      <p>© 2025 アクセシビリティクイズ | yamari</p>
+    </footer>
+  </div>
 </Layout>
