@@ -1,48 +1,75 @@
-# Astro Starter Kit: Basics
+# a11y quiz
+アクセシビリティのクイズアプリです。
 
-```sh
-npm create astro@latest -- --template basics
+## 特徴
+- アクセシビリティの基礎知識から実践的な内容まで学べるクイズを収録
+- 問題の正誤に応じてわかりやすい解説を表示
+- 進行状況がわかるプログレスバー付き
+- Astro × React × TypeScript による高速で型安全な実装
+- microCMSからクイズデータを取得し、管理・更新も容易
+
+## 使用技術
+| 技術 | 説明 |
+|---------|---------|
+| Astro.js | フロントエンドフレームワーク |
+| TypeScript | 型安全な開発 |
+
+## フォルダ構成
 ```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
+a11y-quiz/
 ├── src/
+│   ├── components/
+│   │   ├── AnswerOption.tsx         # 解答ボタンコンポーネント
+│   │   ├── Explanation.tsx         # 解説表示コンポーネント
+│   │   ├── ProgressBar.tsx         # プログレスバーコンポーネント
+│   │   ├── Question.tsx            # クイズの1問表示コンポーネント
+│   │   ├── QuizContainer.tsx       # クイズ全体を管理するコンテナ
+│   │   └── ResultScreen.tsx        # 結果表示コンポーネント
+│
 │   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   │   └── Layout.astro             # 共通レイアウト
+│
+│   ├── libs/
+│   │   ├── fetchQuizzes.ts          # クイズデータ取得用関数
+│   │   └── microcmsClient.ts        # microCMSのクライアント設定
+│
+│   ├── pages/
+│   │   └── index.astro              # トップページ
+│
+│   ├── types/
+│   │   └── types.ts                 # 型定義
+│
+├── public/                          # 画像フォルダ
+│
+├── astro.config.mjs                 # Astro設定ファイル
+├── tailwind.config.cjs              # Tailwind設定ファイル
+├── tsconfig.json                    # TypeScript設定
+├── package.json
+└── README.md
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
 
-## 🧞 Commands
+## セットアップ
+1. **リポジトリをクローン**
+```
+git clone https://github.com/dadayama/a11y-quiz.git
+cd  a11y-quiz
+```
 
-All commands are run from the root of the project, from a terminal:
+2. **環境変数を設定**
+.env.local を作成して以下の値を設定
+このプロジェクトでは、以下の環境変数を使用します。`.env.local` ファイルを作成し、必要な値を設定してください。
+```
+MICROCMS_API_KEY
+MICROCMS_SERVICE_DOMAIN
+```
+  
+3. 依存関係をインストール
+```
+npm install
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+4. 開発サーバーを起動
+```
+npm run dev
+```
