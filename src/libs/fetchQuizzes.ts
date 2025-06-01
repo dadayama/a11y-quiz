@@ -5,5 +5,6 @@ export const fetchQuizzes = async (): Promise<QuizResponse> => {
   const data = await client.get({
     endpoint: 'quizzes',
   });
+
   return data;
 };
