@@ -1,26 +1,27 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import AnswerOption from './AnswerOption';
 import Explanation from './Explanation';
-import { QuizQuestion } from '../types/quiz';
+import { Quiz } from '../types/quiz';
 
-interface QuestionProps {
-  question: QuizQuestion;
+type QuestionProps = {
+  question: Quiz;
   selectedAnswer: number | null;
-  isAnswered: boolean;
   onSelectAnswer: (index: number) => void;
   onNextQuestion: () => void;
-}
+  onShowAnswer: () => void; // 追加
+  progressDescriptionId: string;
+  isAnswered: boolean;
+};
 
 const Question: React.FC<QuestionProps> = ({
   question,
   selectedAnswer,
-  isAnswered,
   onSelectAnswer,
   onNextQuestion,
+  onShowAnswer, // 受け取る
   progressDescriptionId,
+  isAnswered,
 }) => {
-  const isCorrect = isAnswered && selectedAnswer === question.correctAnswer;
-
   const questionRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -28,6 +29,11 @@ const Question: React.FC<QuestionProps> = ({
       questionRef.current.focus();
     }
   }, [question]);
+
+  const isCorrect =
+    isAnswered &&
+    selectedAnswer !== null &&
+    question.correctAnswer.includes(String(selectedAnswer + 1));
 
   return (
     <div key={question.id} className='w-full'>
@@ -45,7 +51,7 @@ const Question: React.FC<QuestionProps> = ({
         {question.options.map((option, index) => (
           <AnswerOption
             key={index}
-            option={option}
+            option={option.label}
             index={index}
             selectedAnswer={selectedAnswer}
             correctAnswer={isAnswered ? question.correctAnswer : null}
@@ -61,23 +67,29 @@ const Question: React.FC<QuestionProps> = ({
           : ''}
       </div>
 
-      {isAnswered && (
-        <>
-          <Explanation
-            explanation={question.explanation}
-            isCorrect={isCorrect}
-          />
+      <div className='mt-6 flex justify-end space-x-3'>
+        {!isAnswered ? (
+          <button
+            onClick={onShowAnswer} // ここで親の関数呼ぶ
+            disabled={selectedAnswer === null}
+            className='px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed'
+            aria-label='答えを見る'
+          >
+            答えを見る
+          </button>
+        ) : (
+          <button
+            onClick={onNextQuestion}
+            className='px-6 py-2 bg-purple-600 text-white rounded-lg shadow-md hover:bg-purple-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50'
+            aria-label='次の質問へ'
+          >
+            次の質問へ
+          </button>
+        )}
+      </div>
 
-          <div className='mt-6 flex justify-end'>
-            <button
-              onClick={onNextQuestion}
-              className='px-6 py-2 bg-purple-600 text-white rounded-lg shadow-md hover:bg-purple-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50'
-              aria-label='次の質問へ'
-            >
-              次の質問へ
-            </button>
-          </div>
-        </>
+      {isAnswered && (
+        <Explanation explanation={question.explanation} isCorrect={isCorrect} />
       )}
     </div>
   );

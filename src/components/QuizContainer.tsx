@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Question from './Question';
 import ProgressBar from './ProgressBar';
 import ResultScreen from './ResultScreen';
-import { QuizContent } from '../types/quiz';
+import { Quiz } from '../types/quiz';
 
 type QuizContainerProps = {
-  questions: QuizContent[];
+  questions: Quiz[];
 };
 
 type QuizState = {
@@ -29,18 +29,25 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ questions }) => {
   const currentQuestion = questions[quizState.currentQuestionIndex];
 
   const handleSelectAnswer = (index: number) => {
-    if (quizState.isAnswered) return;
-
-    const isCorrect = index === currentQuestion.correctAnswer;
+    if (quizState.isAnswered) return; // 答え見た後は変更禁止
 
     setQuizState((prev) => ({
       ...prev,
       selectedAnswer: index,
+    }));
+  };
+  const handleShowAnswer = () => {
+    if (quizState.selectedAnswer === null) return; // 選択なしなら何もしない
+
+    const isCorrect = currentQuestion.correctAnswer.includes(
+      String(quizState.selectedAnswer + 1)
+    );
+    setQuizState((prev) => ({
+      ...prev,
       isAnswered: true,
       score: isCorrect ? prev.score + 1 : prev.score,
     }));
   };
-
   const handleNextQuestion = () => {
     const nextIndex = quizState.currentQuestionIndex + 1;
 
@@ -89,6 +96,7 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ questions }) => {
               selectedAnswer={quizState.selectedAnswer}
               isAnswered={quizState.isAnswered}
               onSelectAnswer={handleSelectAnswer}
+              onShowAnswer={handleShowAnswer}
               onNextQuestion={handleNextQuestion}
               progressDescriptionId={progressDescriptionId}
             />

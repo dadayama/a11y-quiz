@@ -1,13 +1,11 @@
-import React from 'react';
-
-interface AnswerOptionProps {
+type AnswerOptionProps = {
   option: string;
   index: number;
   selectedAnswer: number | null;
-  correctAnswer: number | null;
+  correctAnswer: string[] | null;
   isAnswered: boolean;
   onSelect: (index: number) => void;
-}
+};
 
 const AnswerOption: React.FC<AnswerOptionProps> = ({
   option,
@@ -18,7 +16,8 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
   onSelect,
 }) => {
   const isSelected = selectedAnswer === index;
-  const isCorrect = isAnswered && correctAnswer === index;
+
+  const isCorrect = isAnswered && correctAnswer?.includes(String(index + 1));
   const isIncorrect = isAnswered && isSelected && !isCorrect;
 
   const getOptionClass = () => {
@@ -26,7 +25,7 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
       'relative w-full p-4 mb-3 border-2 rounded-lg cursor-pointer transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-purple-400';
 
     if (isSelected) {
-      baseClass += ' border-purple-600';
+      baseClass += ' border-purple-600 bg-purple-100';
     } else {
       baseClass += ' border-gray-200 hover:border-purple-300';
     }
@@ -40,7 +39,7 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
         baseClass += ' bg-red-100 border-red-500 text-red-800';
       }
 
-      if (correctAnswer === index && !isSelected) {
+      if (correctAnswer?.includes(String(index + 1)) && !isSelected) {
         baseClass += ' bg-green-50 border-green-500 border-dashed';
       }
 
@@ -54,13 +53,20 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
 
   return (
     <li>
-      <button
-        type='button'
-        className={getOptionClass()}
-        onClick={() => !isAnswered && onSelect(index)}
-        disabled={isAnswered}
-        aria-pressed={isSelected} // これはアクセシビリティ的に選択状態を示すのに使えるよ
+      <label
+        className={getOptionClass() + ' block'}
+        tabIndex={isAnswered ? -1 : 0}
       >
+        <input
+          type='radio'
+          name='quiz'
+          // disabled={isAnswered && !isSelected}
+          checked={isSelected}
+          onChange={() => {
+            if (!isAnswered) onSelect(index);
+          }}
+          className='sr-only'
+        />
         <div className='flex items-start'>
           <div className='flex items-center justify-center h-6 w-6 rounded-full border-2 border-gray-300 text-sm font-medium mr-3 mt-0.5'>
             {String.fromCharCode(65 + index)}
@@ -73,7 +79,7 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
             </div>
           )}
         </div>
-      </button>
+      </label>
     </li>
   );
 };

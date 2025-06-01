@@ -1,9 +1,7 @@
-import React from 'react';
-
-interface ExplanationProps {
+type ExplanationProps = {
   explanation: string;
   isCorrect: boolean;
-}
+};
 
 const Explanation: React.FC<ExplanationProps> = ({
   explanation,

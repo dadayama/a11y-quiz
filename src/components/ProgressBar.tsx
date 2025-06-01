@@ -1,10 +1,8 @@
-import React from 'react';
-
-interface ProgressBarProps {
+type ProgressBarProps = {
   current: number;
   total: number;
   descriptionId?: string;
-}
+};
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
   current,
