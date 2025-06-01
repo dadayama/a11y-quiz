@@ -22,7 +22,7 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
 
   const getOptionClass = () => {
     let baseClass =
-      'relative w-full p-4 mb-3 border-2 rounded-lg cursor-pointer transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-purple-400';
+      'relative w-full p-4 mb-3 border-2 rounded-lg cursor-pointer transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-purple-400 focus:transition-none';
 
     if (isSelected) {
       baseClass += ' border-purple-600 bg-purple-100';
@@ -54,13 +54,17 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
   return (
     <li>
       <label
-        className={getOptionClass() + ' block'}
-        tabIndex={isAnswered ? -1 : 0}
+        className={
+          getOptionClass() +
+          ' block focus-within:ring-2 focus-within:ring-purple-500 focus-within:ring-offset-2 focus-within:transition-none'
+        }
+        htmlFor={`option-${index}`}
       >
         <input
           type='radio'
+          id={`option-${index}`}
           name='quiz'
-          // disabled={isAnswered && !isSelected}
+          disabled={isAnswered}
           checked={isSelected}
           onChange={() => {
             if (!isAnswered) onSelect(index);
