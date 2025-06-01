@@ -29,7 +29,7 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ questions }) => {
   const currentQuestion = questions[quizState.currentQuestionIndex];
 
   const handleSelectAnswer = (index: number) => {
-    if (quizState.isAnswered) return; // 答え見た後は変更禁止
+    if (quizState.isAnswered) return;
 
     setQuizState((prev) => ({
       ...prev,
@@ -37,7 +37,7 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ questions }) => {
     }));
   };
   const handleShowAnswer = () => {
-    if (quizState.selectedAnswer === null) return; // 選択なしなら何もしない
+    if (quizState.selectedAnswer === null) return;
 
     const isCorrect = currentQuestion.correctAnswer.includes(
       String(quizState.selectedAnswer + 1)
