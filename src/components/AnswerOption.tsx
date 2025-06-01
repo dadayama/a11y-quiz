@@ -23,7 +23,7 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
 
   const getOptionClass = () => {
     let baseClass =
-      'relative w-full p-4 mb-3 border-2 rounded-lg cursor-pointer transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99]';
+      'relative w-full p-4 mb-3 border-2 rounded-lg cursor-pointer transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-purple-400';
 
     if (isSelected) {
       baseClass += ' border-purple-600';
@@ -53,25 +53,28 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
   };
 
   return (
-    <div
-      className={getOptionClass()}
-      onClick={() => !isAnswered && onSelect(index)}
-      aria-checked={isSelected}
-      role='radio'
-    >
-      <div className='flex items-start'>
-        <div className='flex items-center justify-center h-6 w-6 rounded-full border-2 border-gray-300 text-sm font-medium mr-3 mt-0.5'>
-          {String.fromCharCode(65 + index)}
-        </div>
-        <div className='flex-1 pr-8'>{option}</div>
-        {isAnswered && (
-          <div className='absolute right-3 flex items-center justify-center'>
-            {isCorrect && <span className='text-green-600 text-xl'>○</span>}
-            {isIncorrect && <span className='text-red-600 text-xl'>×</span>}
+    <li>
+      <button
+        type='button'
+        className={getOptionClass()}
+        onClick={() => !isAnswered && onSelect(index)}
+        disabled={isAnswered}
+        aria-pressed={isSelected} // これはアクセシビリティ的に選択状態を示すのに使えるよ
+      >
+        <div className='flex items-start'>
+          <div className='flex items-center justify-center h-6 w-6 rounded-full border-2 border-gray-300 text-sm font-medium mr-3 mt-0.5'>
+            {String.fromCharCode(65 + index)}
           </div>
-        )}
-      </div>
-    </div>
+          <div className='flex-1 pr-8 text-left'>{option}</div>
+          {isAnswered && (
+            <div className='absolute right-3 flex items-center justify-center'>
+              {isCorrect && <span className='text-green-600 text-xl'>○</span>}
+              {isIncorrect && <span className='text-red-600 text-xl'>×</span>}
+            </div>
+          )}
+        </div>
+      </button>
+    </li>
   );
 };
 

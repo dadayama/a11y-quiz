@@ -3,11 +3,19 @@ import { AnimatePresence } from 'framer-motion';
 import Question from './Question';
 import ProgressBar from './ProgressBar';
 import ResultScreen from './ResultScreen';
-import { QuizQuestion, QuizState } from '../types/quiz';
+import { QuizContent } from '../types/quiz';
 
-interface QuizContainerProps {
-  questions: QuizQuestion[];
-}
+type QuizContainerProps = {
+  questions: QuizContent[];
+};
+
+type QuizState = {
+  currentQuestionIndex: number;
+  selectedAnswer: number | null;
+  isAnswered: boolean;
+  score: number;
+  isCompleted: boolean;
+};
 
 const QuizContainer: React.FC<QuizContainerProps> = ({ questions }) => {
   const [quizState, setQuizState] = useState<QuizState>({
@@ -15,63 +23,66 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ questions }) => {
     selectedAnswer: null,
     isAnswered: false,
     score: 0,
-    isCompleted: false
+    isCompleted: false,
   });
-  
+
   const currentQuestion = questions[quizState.currentQuestionIndex];
-  
+
   const handleSelectAnswer = (index: number) => {
     if (quizState.isAnswered) return;
-    
+
     const isCorrect = index === currentQuestion.correctAnswer;
-    
-    setQuizState(prev => ({
+
+    setQuizState((prev) => ({
       ...prev,
       selectedAnswer: index,
       isAnswered: true,
-      score: isCorrect ? prev.score + 1 : prev.score
+      score: isCorrect ? prev.score + 1 : prev.score,
     }));
   };
-  
+
   const handleNextQuestion = () => {
     const nextIndex = quizState.currentQuestionIndex + 1;
-    
+
     if (nextIndex >= questions.length) {
-      setQuizState(prev => ({
+      setQuizState((prev) => ({
         ...prev,
-        isCompleted: true
+        isCompleted: true,
       }));
       return;
     }
-    
-    setQuizState(prev => ({
+
+    setQuizState((prev) => ({
       ...prev,
       currentQuestionIndex: nextIndex,
       selectedAnswer: null,
-      isAnswered: false
+      isAnswered: false,
     }));
   };
-  
+
   const handleRestartQuiz = () => {
     setQuizState({
       currentQuestionIndex: 0,
       selectedAnswer: null,
       isAnswered: false,
       score: 0,
-      isCompleted: false
+      isCompleted: false,
     });
   };
-  
+
+  const progressDescriptionId = 'progress-description';
+
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className='w-full max-w-2xl mx-auto'>
       {!quizState.isCompleted ? (
-        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-          <ProgressBar 
-            current={quizState.currentQuestionIndex + 1} 
-            total={questions.length} 
+        <div className='bg-white rounded-2xl shadow-lg p-6 md:p-8'>
+          <ProgressBar
+            current={quizState.currentQuestionIndex + 1}
+            total={questions.length}
+            descriptionId={progressDescriptionId}
           />
-          
-          <AnimatePresence mode="wait">
+
+          <AnimatePresence mode='wait'>
             <Question
               key={currentQuestion.id}
               question={currentQuestion}
@@ -79,11 +90,12 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ questions }) => {
               isAnswered={quizState.isAnswered}
               onSelectAnswer={handleSelectAnswer}
               onNextQuestion={handleNextQuestion}
+              progressDescriptionId={progressDescriptionId}
             />
           </AnimatePresence>
         </div>
       ) : (
-        <ResultScreen 
+        <ResultScreen
           score={quizState.score}
           totalQuestions={questions.length}
           onRestart={handleRestartQuiz}
