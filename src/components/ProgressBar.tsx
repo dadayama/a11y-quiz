@@ -20,7 +20,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         <span>
           質問 {current} / {total}
         </span>
-        <span>{progress}% 完了</span>
+        <span>進捗：{progress}% 完了</span>
       </div>
       <div className='w-full bg-gray-200 rounded-full h-2.5'>
         <div
