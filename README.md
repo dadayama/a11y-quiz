@@ -19,7 +19,7 @@
 a11y-quiz/
 ├── src/
 │   ├── components/
-│   │   ├── AnswerOption.tsx         # 解答ボタンコンポーネント
+│   │   ├── AnswerOption.tsx        # 解答ボタンコンポーネント
 │   │   ├── Explanation.tsx         # 解説表示コンポーネント
 │   │   ├── ProgressBar.tsx         # プログレスバーコンポーネント
 │   │   ├── Question.tsx            # クイズの1問表示コンポーネント
