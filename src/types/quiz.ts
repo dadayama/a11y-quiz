@@ -1,10 +1,15 @@
-export interface Quiz {
+export interface QuizQuestion {
   id: number;
   question: string;
-  answer: boolean;
+  options: string[];
+  correctAnswer: number;
   explanation: string;
 }
 
-export interface QuizResponse {
-  contents: Quiz[];
+export interface QuizState {
+  currentQuestionIndex: number;
+  selectedAnswer: number | null;
+  isAnswered: boolean;
+  score: number;
+  isCompleted: boolean;
 }
