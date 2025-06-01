@@ -19,7 +19,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({
     } else if (percentage >= 70) {
       return 'よくできました！アクセシビリティの原則をしっかり理解しています。';
     } else if (percentage >= 50) {
-      return 'がんばりました！これからもWebアクセシビリティについて学び続けましょう。';
+      return 'がんばりました！これからもアクセシビリティについて学び続けましょう。';
     } else {
       return 'クイズに挑戦してくれてありがとう！アクセシビリティガイドラインを復習して、知識を深めましょう。';
     }
