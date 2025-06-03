@@ -67,7 +67,7 @@ const Question: React.FC<QuestionProps> = ({
         {!isAnswered && (
           <button
             onClick={handleShowAnswer}
-            className='px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
+            className='px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 border border-transparent'
             aria-label='答えを見る'
           >
             答えを見る
@@ -93,7 +93,7 @@ const Question: React.FC<QuestionProps> = ({
           <div className='mt-6 flex justify-end'>
             <button
               onClick={onNextQuestion}
-              className='px-6 py-2 bg-purple-600 text-white rounded-lg shadow-md hover:bg-purple-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2 focus:ring-offset-white'
+              className='px-6 py-2 bg-purple-600 text-white rounded-lg shadow-md hover:bg-purple-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2 focus:ring-offset-white border border-transparent'
               aria-label='次の質問へ'
             >
               次の質問へ
