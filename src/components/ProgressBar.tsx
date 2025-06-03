@@ -14,9 +14,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ current, total }) => {
         </span>
         <span id='progress'>進捗：{progress}% 完了</span>
       </div>
-      <div className='w-full bg-gray-200 rounded-full h-2.5'>
+      <div className='w-full bg-gray-200 rounded-full h-2.5 border border-transparent'>
         <div
-          className='bg-purple-600 h-2.5 rounded-full transition-all duration-500 ease-out'
+          className='bg-purple-600 h-2.5 rounded-full transition-all duration-500 ease-out border border-transparent'
           style={{ width: `${progress}%` }}
           aria-labelledby='progress'
           aria-valuemin={1}
