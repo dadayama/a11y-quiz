@@ -1,6 +1,7 @@
 import AnswerOption from './AnswerOption';
 import Explanation from './Explanation';
 import { Quiz } from '../types/quiz';
+import { useState } from 'react';
 
 type QuestionProps = {
   question: Quiz;
@@ -18,26 +19,31 @@ const Question: React.FC<QuestionProps> = ({
   onSelectAnswer,
   onNextQuestion,
   onShowAnswer,
-  progressDescriptionId,
   isAnswered,
 }) => {
   const isCorrect =
     isAnswered &&
     selectedAnswer !== null &&
     question.correctAnswer.includes(String(selectedAnswer + 1));
-
+  const handleShowAnswer = () => {
+    if (selectedAnswer === null) {
+      setErrorMessage('選択肢を選んでください');
+    } else {
+      setErrorMessage('');
+      onShowAnswer();
+    }
+  };
+  const [errorMessage, setErrorMessage] = useState('');
   return (
     <div key={question.id} className='w-full'>
       <h2
         id={`question-${question.id}`}
         className='text-sm md:text-2xl font-semibold text-gray-800 mb-6'
-        aria-describedby={progressDescriptionId}
-        tabIndex={0}
       >
         {question.question}
       </h2>
 
-      <ul>
+      <div role='radiogroup' aria-labelledby={`question-${question.id}`}>
         {question.options.map((option, index) => (
           <AnswerOption
             key={index}
@@ -49,7 +55,7 @@ const Question: React.FC<QuestionProps> = ({
             onSelect={onSelectAnswer}
           />
         ))}
-      </ul>
+      </div>
 
       <div aria-live='polite' className='sr-only' id='explanation-live'>
         {isAnswered
@@ -60,8 +66,7 @@ const Question: React.FC<QuestionProps> = ({
       <div className='mt-6 flex justify-end space-x-3'>
         {!isAnswered && (
           <button
-            onClick={onShowAnswer}
-            disabled={selectedAnswer === null}
+            onClick={handleShowAnswer}
             className='px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
             aria-label='答えを見る'
           >
@@ -69,6 +74,14 @@ const Question: React.FC<QuestionProps> = ({
           </button>
         )}
       </div>
+      <p
+        id='error-message'
+        role='alert'
+        aria-live='polite'
+        className='text-red-600 text-md font-semibold text-right mt-3'
+      >
+        {errorMessage}
+      </p>
 
       {isAnswered && (
         <>

@@ -1,3 +1,5 @@
+import { MutableRefObject } from 'react';
+
 type AnswerOptionProps = {
   option: string;
   index: number;
@@ -52,39 +54,43 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
   };
 
   return (
-    <li>
-      <label
-        className={
-          getOptionClass() +
-          ' block focus-within:ring-2 focus-within:ring-purple-500 focus-within:ring-offset-2 focus-within:transition-none'
-        }
-        htmlFor={`option-${index}`}
-      >
-        <input
-          type='radio'
-          id={`option-${index}`}
-          name='quiz'
-          disabled={isAnswered}
-          checked={isSelected}
-          onChange={() => {
-            if (!isAnswered) onSelect(index);
-          }}
-          className='sr-only'
-        />
-        <div className='flex items-start'>
-          <div className='flex items-center justify-center h-6 w-6 rounded-full border-2 border-gray-300 text-sm font-medium mr-3 mt-0.5'>
-            {String.fromCharCode(65 + index)}
-          </div>
-          <div className='flex-1 pr-8 text-left'>{option}</div>
-          {isAnswered && (
-            <div className='absolute right-3 flex items-center justify-center'>
-              {isCorrect && <span className='text-green-600 text-xl'>○</span>}
-              {isIncorrect && <span className='text-red-600 text-xl'>×</span>}
-            </div>
-          )}
+    <label
+      className={
+        getOptionClass() +
+        ' block focus-within:ring-2 focus-within:ring-purple-500 focus-within:ring-offset-2 focus-within:transition-none'
+      }
+      htmlFor={`option-${index}`}
+    >
+      <input
+        type='radio'
+        id={`option-${index}`}
+        name='quiz'
+        disabled={isAnswered}
+        checked={isSelected}
+        onChange={() => {
+          if (!isAnswered) onSelect(index);
+        }}
+        className='sr-only'
+      />
+      <div className='flex items-start'>
+        <div
+          className={`flex items-center justify-center h-6 w-6 rounded-full border-2 mr-3 mt-0.5 ${
+            isSelected ? 'bg-purple-600 border-purple-600' : 'border-gray-400'
+          }`}
+        >
+          {isSelected && <div className='w-2.5 h-2.5 rounded-full bg-white' />}
         </div>
-      </label>
-    </li>
+
+        <div className='flex-1 pr-8 text-left'>{option}</div>
+
+        {isAnswered && (
+          <div className='absolute right-3 flex items-center justify-center'>
+            {isCorrect && <span className='text-green-600 text-xl'>○</span>}
+            {isIncorrect && <span className='text-red-600 text-xl'>×</span>}
+          </div>
+        )}
+      </div>
+    </label>
   );
 };
 
