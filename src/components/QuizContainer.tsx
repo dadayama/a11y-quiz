@@ -86,7 +86,6 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ questions }) => {
           <ProgressBar
             current={quizState.currentQuestionIndex + 1}
             total={questions.length}
-            descriptionId={progressDescriptionId}
           />
 
           <AnimatePresence mode='wait'>
